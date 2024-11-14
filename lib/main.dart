@@ -16,6 +16,6 @@ class MyApp extends StatelessWidget {
         title: 'Chinese FlashCard',
         debugShowCheckedModeBanner: false,
         theme: apptheme,
-        home: HomePage());
+        home:const HomePage());
   }
 }

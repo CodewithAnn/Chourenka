@@ -2,7 +2,6 @@ import 'package:chinese_flashcard/components/homme_page/topic_cards.dart';
 import 'package:chinese_flashcard/configs/constants.dart';
 import 'package:chinese_flashcard/configs/extenstions.dart';
 import 'package:chinese_flashcard/data/words.dart';
-import 'package:chinese_flashcard/model/word.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,7 +16,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     for (var t in words) {
       if (!_topics.contains(t.topic)) {
@@ -42,7 +40,7 @@ class _HomePageState extends State<HomePage> {
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(32.0),
                   bottomRight: Radius.circular(32.0))),
-          title: Text.rich(
+          title: const Text.rich(
               textAlign: TextAlign.center,
               TextSpan(children: [
                 TextSpan(

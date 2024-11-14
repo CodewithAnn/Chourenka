@@ -22,14 +22,33 @@ class TopicCards extends StatelessWidget {
             borderRadius: BorderRadius.circular(12.0),
             color: context.theme.primaryColor),
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Expanded(
                 flex: 2,
                 child: Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Image.asset("assets/images/$_topics.png"))),
-            Expanded(child: Text(_topics)),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 6.0,
+                right: 6.0,
+                bottom: 4.0,
+              ),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  _topics,
+                  // overflow: TextOverflow.clip,
+                  // maxLines: 2,
+                  softWrap: false,
+                 
+                  style:const TextStyle(
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
