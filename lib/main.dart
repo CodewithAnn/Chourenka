@@ -1,3 +1,4 @@
+import 'package:chinese_flashcard/configs/apptheme.dart';
 import 'package:chinese_flashcard/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -12,14 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Chinese FlashCard',
-      theme: ThemeData(
-       
-        useMaterial3: true,
-      ),
-      home: HomePage()
-    );
+        title: 'Chinese FlashCard',
+        debugShowCheckedModeBanner: false,
+        theme: apptheme,
+        home: HomePage());
   }
 }
-
-
