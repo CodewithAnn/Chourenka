@@ -1,3 +1,4 @@
+import 'package:chinese_flashcard/animations/fadein_animation.dart';
 import 'package:chinese_flashcard/components/homme_page/topic_cards.dart';
 import 'package:chinese_flashcard/configs/constants.dart';
 import 'package:chinese_flashcard/configs/extenstions.dart';
@@ -61,7 +62,8 @@ class _HomePageState extends State<HomePage> {
               flexibleSpace: FlexibleSpaceBar(
                 background: Padding(
                   padding: EdgeInsets.all(size.width * 0.10),
-                  child: Image.asset("assets/images/drangon.png"),
+                  child: FadeInAnimation(
+                      child: Image.asset("assets/images/drangon.png")),
                 ),
               ),
             ),
@@ -69,7 +71,7 @@ class _HomePageState extends State<HomePage> {
             SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                   childCount: _topics.length,
-                  (context, index) => TopicCards(topics: _topics[index]),
+                  (context, index) => FadeInAnimation(child: TopicCards(topics: _topics[index])),
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
