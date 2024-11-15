@@ -1,3 +1,6 @@
+import 'package:chinese_flashcard/animations/slide_animation.dart';
+import 'package:chinese_flashcard/components/homme_page/topic_cards.dart';
+import 'package:chinese_flashcard/configs/extenstions.dart';
 import 'package:chinese_flashcard/providers/flashcard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +15,9 @@ class FlashcardPage extends ConsumerStatefulWidget {
 class _FlashcardPageState extends ConsumerState<FlashcardPage> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    final height = size.height;
+    final width = size.width;
     final flashCardTitle = ref.watch(flashCardProvider);
     return Scaffold(
       appBar: AppBar(
@@ -57,6 +63,15 @@ class _FlashcardPageState extends ConsumerState<FlashcardPage> {
           ],
         ),
         // leading:
+      ),
+      body: Center(
+        child: SlideAnimation(
+          child: Container(
+            color: context.theme.primaryColor,
+            width: width * 0.70,
+            height: height * 0.60,
+          ),
+        ),
       ),
     );
   }
