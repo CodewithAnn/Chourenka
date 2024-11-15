@@ -1,7 +1,9 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:chinese_flashcard/configs/extenstions.dart';
+import 'package:chinese_flashcard/utils/methods.dart';
 import 'package:flutter/material.dart';
 
-class TopicCards extends StatelessWidget {
+class TopicCards extends ConsumerWidget {
   const TopicCards({
     super.key,
     required String topics,
@@ -10,11 +12,11 @@ class TopicCards extends StatelessWidget {
   final String _topics;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       onTap: () {
         debugPrint("Card $_topics is selected");
-        // Todo: add navigation to card screen
+        sessionMethod(context: context, topic: _topics, ref: ref);
       },
       child: Container(
         // color: Colors.red,
@@ -42,8 +44,8 @@ class TopicCards extends StatelessWidget {
                   // overflow: TextOverflow.clip,
                   // maxLines: 2,
                   softWrap: false,
-                 
-                  style:const TextStyle(
+
+                  style: const TextStyle(
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
