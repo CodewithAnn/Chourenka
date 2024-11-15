@@ -30,7 +30,9 @@ class TopicCards extends ConsumerWidget {
                 flex: 2,
                 child: Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: Image.asset("assets/images/$_topics.png"))),
+                    child: Hero(
+                        tag: _topics,
+                        child: Image.asset("assets/images/$_topics.png")))),
             Padding(
               padding: const EdgeInsets.only(
                 left: 6.0,

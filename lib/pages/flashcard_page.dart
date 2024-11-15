@@ -15,7 +15,48 @@ class _FlashcardPageState extends ConsumerState<FlashcardPage> {
     final flashCardTitle = ref.watch(flashCardProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(flashCardTitle),
+        // automaticallyImplyLeading: false,
+        title: Row(
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Hero(
+                tag: flashCardTitle,
+                // createRectTween: ,
+                flightShuttleBuilder: (
+                  flightContext,
+                  animation,
+                  flightDirection,
+                  fromHeroContext,
+                  toHeroContext,
+                ) {
+                  switch (flightDirection) {
+                    case HeroFlightDirection.push:
+                      //
+                      return Material(
+                        color: Colors.transparent,
+                        child: SlideTransition(
+                            position: animation.drive(Tween<Offset>(
+                                begin: Offset(0, 0), end: Offset(0, 0))),
+                            child: toHeroContext.widget),
+                      );
+                    case HeroFlightDirection.pop:
+                      return Material(
+                        color: Colors.transparent,
+                        child: fromHeroContext.widget,
+                      );
+                  }
+                },
+                child: Image.asset(
+                  "assets/images/${flashCardTitle}.png",
+                  height: 48,
+                )),
+            SizedBox(
+              width: 16,
+            ),
+            Text(flashCardTitle),
+          ],
+        ),
+        // leading:
       ),
     );
   }

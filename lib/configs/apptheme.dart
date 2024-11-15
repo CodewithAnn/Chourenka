@@ -6,6 +6,8 @@ ThemeData apptheme = ThemeData(
     primaryColor: kRed,
     appBarTheme: AppBarTheme(
         color: kRed,
+        elevation: 0,
+        centerTitle: true,
         titleTextStyle: TextStyle(
           color: Colors.white,
           fontSize: 24,
