@@ -1,7 +1,9 @@
+import 'package:chinese_flashcard/animations/half_flip_animation.dart';
 import 'package:chinese_flashcard/animations/slide_animation.dart';
 import 'package:chinese_flashcard/configs/extenstions.dart';
 import 'package:chinese_flashcard/enum/slide_direction.dart';
 import 'package:chinese_flashcard/providers/flashcard_provider.dart';
+import 'package:chinese_flashcard/providers/flipcard/flip_card_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,6 +21,7 @@ class _FlashcardPageState extends ConsumerState<FlashcardPage> {
     final height = size.height;
     final width = size.width;
     final flashCardTitle = ref.watch(flashCardProvider);
+    final flipCard = ref.watch(flipCardProvider);
     return Scaffold(
       appBar: AppBar(
         // automaticallyImplyLeading: false,
@@ -42,7 +45,8 @@ class _FlashcardPageState extends ConsumerState<FlashcardPage> {
                         color: Colors.transparent,
                         child: SlideTransition(
                             position: animation.drive(Tween<Offset>(
-                                begin: const Offset(0, 0), end: const Offset(0, 0))),
+                                begin: const Offset(0, 0),
+                                end: const Offset(0, 0))),
                             child: toHeroContext.widget),
                       );
                     case HeroFlightDirection.pop:
@@ -56,7 +60,7 @@ class _FlashcardPageState extends ConsumerState<FlashcardPage> {
                   "assets/images/$flashCardTitle.png",
                   height: 48,
                 )),
-           const SizedBox(
+            const SizedBox(
               width: 16,
             ),
             Text(flashCardTitle),
@@ -65,12 +69,25 @@ class _FlashcardPageState extends ConsumerState<FlashcardPage> {
         // leading:
       ),
       body: Center(
-        child: SlideAnimation(
-          slideDirection: SlideDirection.upIn,
-          child: Container(
-            color: context.theme.primaryColor,
-            width: width * 0.70,
-            height: height * 0.60,
+        child: GestureDetector(
+          onDoubleTap: () {
+            ref.read(flipCardProvider.notifier).runFlipCard();
+          },
+          child: HalfFlipAnimation(
+            animate: ref.read(flipCardProvider.notifier).flipCard1,
+            reset: false,
+            animationCompleted: () {
+              debugPrint("Card Fliped");
+            },
+            flipFromHalfWay: false,
+            child: SlideAnimation(
+              slideDirection: SlideDirection.upIn,
+              child: Container(
+                color: context.theme.primaryColor,
+                width: width * 0.70,
+                height: height * 0.60,
+              ),
+            ),
           ),
         ),
       ),
