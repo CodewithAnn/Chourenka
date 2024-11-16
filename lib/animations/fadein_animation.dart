@@ -17,7 +17,7 @@ class _FadeInAnimationState extends State<FadeInAnimation>
   @override
   void initState() {
     _fadeInAnimationController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 1000));
+        vsync: this, duration: const Duration(milliseconds: 1000));
     super.initState();
     _fadeInAnimation = Tween<double>(begin: 0.60, end: 1).animate(CurvedAnimation(
         parent: _fadeInAnimationController, curve: Curves.easeIn));
