@@ -30,15 +30,21 @@ class _HalfFlipAnimationState extends State<HalfFlipAnimation>
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
-        duration: Duration(milliseconds: 1000), vsync: this);
-    _animationController.addListener(
-      () {
-        if (_animationController.isCompleted) {
-          widget.animationCompleted.call();
-        }
-      },
-    );
+    _animationController =
+        AnimationController(duration:const Duration(milliseconds: 1000), vsync: this)
+          ..addListener(
+            () {
+              if (_animationController.isCompleted) {
+                widget.animationCompleted.call();
+              }
+            },
+          );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -54,13 +60,11 @@ class _HalfFlipAnimationState extends State<HalfFlipAnimation>
   }
 
   @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    double rotationAdjustment = 0.0;
+    if (widget.flipFromHalfWay) {
+      rotationAdjustment = pi / 2;
+    }
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context, child) {
@@ -68,7 +72,8 @@ class _HalfFlipAnimationState extends State<HalfFlipAnimation>
           alignment: Alignment.center,
           transform: Matrix4.identity()
             ..setEntry(3, 2, 0.001)
-            ..rotateY(_animationController.value * pi / 2),
+            ..rotateY((_animationController.value * pi) / 2)
+            ..rotateY(rotationAdjustment),
           child: widget.child,
         );
       },

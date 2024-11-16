@@ -1,7 +1,5 @@
-import 'package:chinese_flashcard/animations/half_flip_animation.dart';
-import 'package:chinese_flashcard/animations/slide_animation.dart';
-import 'package:chinese_flashcard/configs/extenstions.dart';
-import 'package:chinese_flashcard/enum/slide_direction.dart';
+import 'package:chinese_flashcard/components/flashcard_pages/card1.dart';
+import 'package:chinese_flashcard/components/flashcard_pages/card2.dart';
 import 'package:chinese_flashcard/providers/flashcard_provider.dart';
 import 'package:chinese_flashcard/providers/flipcard/flip_card_provider.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +15,9 @@ class FlashcardPage extends ConsumerStatefulWidget {
 class _FlashcardPageState extends ConsumerState<FlashcardPage> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final height = size.height;
-    final width = size.width;
     final flashCardTitle = ref.watch(flashCardProvider);
     final flipCard = ref.watch(flipCardProvider);
+
     return Scaffold(
       appBar: AppBar(
         // automaticallyImplyLeading: false,
@@ -68,28 +64,11 @@ class _FlashcardPageState extends ConsumerState<FlashcardPage> {
         ),
         // leading:
       ),
-      body: Center(
-        child: GestureDetector(
-          onDoubleTap: () {
-            ref.read(flipCardProvider.notifier).runFlipCard();
-          },
-          child: HalfFlipAnimation(
-            animate: ref.read(flipCardProvider.notifier).flipCard1,
-            reset: false,
-            animationCompleted: () {
-              debugPrint("Card Fliped");
-            },
-            flipFromHalfWay: false,
-            child: SlideAnimation(
-              slideDirection: SlideDirection.upIn,
-              child: Container(
-                color: context.theme.primaryColor,
-                width: width * 0.70,
-                height: height * 0.60,
-              ),
-            ),
-          ),
-        ),
+      body: const Center(
+        child: Stack(children: [
+          Card2(),
+          Card1(),
+        ]),
       ),
     );
   }
