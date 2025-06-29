@@ -1,3 +1,5 @@
+import 'package:chinese_flashcard/components/homme_page/topic_cards.dart';
+import 'package:chinese_flashcard/data/words.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -8,6 +10,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  /// dummy data list currently
+  final List<String> _topics = [];
+
+  @override
+  void initState() {
+    // add the topics in list
+    for (var topic in words) {
+      if (!_topics.contains(topic.topic)) {
+        _topics.add(topic.topic);
+      }
+      _topics.sort();
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -38,10 +55,9 @@ class _HomePageState extends State<HomePage> {
             ),
             SliverGrid(
                 delegate: SliverChildBuilderDelegate(
+                  childCount: _topics.length,
                   (context, index) {
-                    return Container(
-                      color: Colors.red,
-                    );
+                    return TopicTile(topic: _topics[index]);
                   },
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
