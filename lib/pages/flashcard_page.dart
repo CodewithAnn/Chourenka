@@ -1,8 +1,13 @@
+import 'dart:developer';
+
+import 'package:chinese_flashcard/bloc/flash_card/flash_card_cubit.dart';
 import 'package:chinese_flashcard/components/flashcard_pages/card1.dart';
 import 'package:chinese_flashcard/components/flashcard_pages/card2.dart';
+import 'package:chinese_flashcard/pages/home_page.dart';
 import 'package:chinese_flashcard/providers/flashcard_provider.dart';
 import 'package:chinese_flashcard/providers/flipcard/flip_card_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FlashcardPage extends ConsumerStatefulWidget {
@@ -15,61 +20,28 @@ class FlashcardPage extends ConsumerStatefulWidget {
 class _FlashcardPageState extends ConsumerState<FlashcardPage> {
   @override
   Widget build(BuildContext context) {
-    final flashCardTitle = ref.watch(flashCardProvider);
-    final flipCard = ref.watch(flipCardProvider);
-
-    return Scaffold(
-      appBar: AppBar(
-        // automaticallyImplyLeading: false,
-        title: Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Hero(
-                tag: flashCardTitle,
-                // createRectTween: ,
-                flightShuttleBuilder: (
-                  flightContext,
-                  animation,
-                  flightDirection,
-                  fromHeroContext,
-                  toHeroContext,
-                ) {
-                  switch (flightDirection) {
-                    case HeroFlightDirection.push:
-                      //
-                      return Material(
-                        color: Colors.transparent,
-                        child: SlideTransition(
-                            position: animation.drive(Tween<Offset>(
-                                begin: const Offset(0, 0),
-                                end: const Offset(0, 0))),
-                            child: toHeroContext.widget),
-                      );
-                    case HeroFlightDirection.pop:
-                      return Material(
-                        color: Colors.transparent,
-                        child: fromHeroContext.widget,
-                      );
-                  }
-                },
-                child: Image.asset(
-                  "assets/images/$flashCardTitle.png",
-                  height: 48,
-                )),
-            const SizedBox(
-              width: 16,
-            ),
-            Text(flashCardTitle),
-          ],
-        ),
-        // leading:
-      ),
-      body: const Center(
-        child: Stack(children: [
-          Card2(),
-          Card1(),
-        ]),
-      ),
+    return BlocBuilder<FlashCardCubit, FlashCardState>(
+      builder: (context, state) {
+        log("${state.topic}");
+        return Scaffold(
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                  icon: Icon(Icons.clear))
+            ],
+            title: Text(state.topic),
+          ),
+        );
+      },
     );
   }
 }

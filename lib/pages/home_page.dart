@@ -1,4 +1,6 @@
+import 'package:chinese_flashcard/animations/fadein_animation.dart';
 import 'package:chinese_flashcard/components/homme_page/topic_cards.dart';
+import 'package:chinese_flashcard/configs/extenstions.dart';
 import 'package:chinese_flashcard/data/words.dart';
 import 'package:flutter/material.dart';
 
@@ -50,8 +52,14 @@ class _HomePageState extends State<HomePage> {
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: CustomScrollView(slivers: [
-            const SliverAppBar(
-              title: Text('Image placeHolder'),
+            SliverAppBar(
+              backgroundColor: context.theme.scaffoldBackgroundColor,
+              expandedHeight: size.height * 0.32,
+              flexibleSpace: FlexibleSpaceBar(
+                  background: Padding(
+                padding: EdgeInsets.all(size.width * 0.10),
+                child: FadeInAnimation(child: Image.asset('assets/images/drangon.png')),
+              )),
             ),
             SliverGrid(
                 delegate: SliverChildBuilderDelegate(

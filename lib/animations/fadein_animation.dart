@@ -8,29 +8,27 @@ class FadeInAnimation extends StatefulWidget {
   State<FadeInAnimation> createState() => _FadeInAnimationState();
 }
 
-class _FadeInAnimationState extends State<FadeInAnimation>
-    with SingleTickerProviderStateMixin {
+class _FadeInAnimationState extends State<FadeInAnimation> with SingleTickerProviderStateMixin {
   late AnimationController _fadeInAnimationController;
   late Animation<double> _fadeInAnimation;
   late Animation<double> _scaleAnimation;
 
   @override
   void initState() {
-    _fadeInAnimationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1000));
+    _fadeInAnimationController =
+        AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
     super.initState();
-    _fadeInAnimation = Tween<double>(begin: 0.60, end: 1).animate(CurvedAnimation(
-        parent: _fadeInAnimationController, curve: Curves.easeIn));
-    // scale animation
-    _scaleAnimation = Tween<double>(begin: 0.40, end: 1).animate(
-        CurvedAnimation(
-            parent: _fadeInAnimationController, curve: Curves.easeIn));
+    _scaleAnimation = Tween<double>(begin: 0.90, end: 1.0)
+        .animate(CurvedAnimation(parent: _fadeInAnimationController, curve: Curves.easeIn));
+    _fadeInAnimation = Tween<double>(begin: 0.90, end: 1.0)
+        .animate(CurvedAnimation(parent: _fadeInAnimationController, curve: Curves.easeIn));
+
+    //start the animation
     _fadeInAnimationController.forward();
   }
 
   @override
   void dispose() {
-   
     _fadeInAnimationController.dispose();
     super.dispose();
   }
@@ -39,16 +37,13 @@ class _FadeInAnimationState extends State<FadeInAnimation>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _fadeInAnimationController,
-      builder: (context, child) {
-        return Opacity(
-          opacity: _fadeInAnimation.value,
-          child: Transform(
-            alignment: Alignment.bottomCenter,
-            transform: Matrix4.identity()..scale(_scaleAnimation.value),
-            child: widget.child,
-          ),
-        );
-      },
+      builder: (context, child) => Opacity(
+        opacity: _fadeInAnimation.value,
+        child: Transform(
+          transform: Matrix4.identity()..scale(_scaleAnimation.value),
+          child: widget.child,
+        ),
+      ),
     );
   }
 }
